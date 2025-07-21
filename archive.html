@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章归档 - 克苏鲁秘语</title>
+   <script src="js/tailwindcss.js"></script>
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8B5CF6',
+            secondary: '#EC4899',
+            accent: '#10B981',
+            dark: '#111827',
+            light: '#F9FAFB',
+            mythic: {
+              50: '#F3F4F6',
+              100: '#E5E7EB',
+              200: '#D1D5DB',
+              300: '#9CA3AF',
+              400: '#6B7280',
+              500: '#4B5563',
+              600: '#374151',
+              700: '#1F2937',
+              800: '#111827',
+              900: '#030712',
+            },
+            cosmic: {
+              50: '#F5F3FF',
+              100: '#EDE9FE',
+              200: '#DDD6FE',
+              300: '#C4B5FD',
+              400: '#A78BFA',
+              500: '#8B5CF6',
+              600: '#7C3AED',
+              700: '#6D28D9',
+              800: '#5B21B6',
+              900: '#4C1D95',
+            }
+          },
+          fontFamily: {
+            mythos: ['Georgia', 'serif'],
+            cosmic: ['"Arial Narrow"', 'sans-serif'],
+          },
+          backgroundImage: {
+            'mythic-pattern': "url('https://picsum.photos/id/1048/1200/800')",
+            'cosmic-void': "url('https://picsum.photos/id/1019/1200/800')",
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              '0%': { textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6' },
+              '100%': { textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6' },
+            }
+          }
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .text-shadow-glow {
+        text-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+      }
+      .bg-blur {
+        backdrop-filter: blur(8px);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .animate-float-slow {
+        animation: float 8s ease-in-out infinite;
+      }
+    }
+  </style>
+</head>
+<body class="bg-mythic-50 dark:bg-mythic-900 text-mythic-800 dark:text-mythic-100 transition-colors duration-300 font-mythos">
+  <!-- 导航栏 -->
+  <header class="fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between bg-white/80 dark:bg-mythic-800/80 bg-blur">
+      <a href="index.html" class="flex items-center space-x-2">
+        <span class="text-2xl text-primary dark:text-cosmic-400 font-bold animate-pulse-slow">
+          <i class="fa fa-eye"></i>
+        </span>
+        <span class="text-xl font-cosmic tracking-wider">克苏鲁秘语</span>
+      </a>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="index.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">首页</a>
+        <a href="tags.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">标签云</a>
+        <a href="search.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">搜索</a>
+        <a href="about.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">关于</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button class="md:hidden text-2xl" id="menu-toggle">
+        <i class="fa fa-bars"></i>
+      </button>
+      
+      <!-- 主题切换按钮 -->
+      <button id="theme-toggle" class="ml-4 p-2 rounded-full hover:bg-mythic-200 dark:hover:bg-mythic-700 transition-colors duration-300">
+        <i class="fa fa-moon-o dark:hidden"></i>
+        <i class="fa fa-sun-o hidden dark:inline-block"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-mythic-800">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="index.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">首页</a>
+        <a href="tags.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">标签云</a>
+        <a href="search.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">搜索</a>
+        <a href="about.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">关于</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main class="container mx-auto px-4 pt-24 pb-16">
+    <!-- 页面标题 -->
+    <section class="mb-12 text-center">
+      <h1 class="text-[clamp(1.75rem,5vw,3rem)] font-bold text-primary dark:text-cosmic-400 mb-4">文章归档</h1>
+      <p class="text-lg text-mythic-600 dark:text-mythic-300 max-w-3xl mx-auto">按时间浏览所有文章</p>
+    </section>
+    
+    <!-- 归档内容 -->
+    <section class="bg-white dark:bg-mythic-800 rounded-xl shadow-md p-8 mb-12">
+      <!-- 2025年7月 -->
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold mb-4 text-primary dark:text-cosmic-400">2025年7月</h2>
+        <div class="space-y-4">
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">克苏鲁神话与埃及九柱神的神秘联系</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-07-15</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">深入探讨克苏鲁神话体系中的旧日支配者与埃及九柱神之间可能存在的神秘联系，分析两者在创世神话、宇宙观和崇拜仪式上的相似性...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+            </div>
+          </article>
+          
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">从奈亚拉托提普看跨文化神话中的信使角色</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-07-10</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">对比分析克苏鲁神话中的奈亚拉托提普与其他文化中类似的信使角色，如埃及的托特、希腊的赫尔墨斯，探讨跨文化神话意象的共性...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+              <a href="#" class="text-xs bg-accent/10 dark:bg-accent/20 text-accent dark:text-accent px-3 py-1 rounded-full">希腊神话</a>
+            </div>
+          </article>
+          
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">克苏鲁神话中的海洋意象与古埃及水神信仰</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-07-05</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">分析克苏鲁神话中频繁出现的海洋意象与古埃及神话中对水神的崇拜，探讨两者在象征意义和文化内涵上的异同点...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 2025年6月 -->
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold mb-4 text-primary dark:text-cosmic-400">2025年6月</h2>
+        <div class="space-y-4">
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">克苏鲁神话中的时间概念与埃及永生信仰</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-06-28</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">对比分析克苏鲁神话中对时间的扭曲描绘与古埃及神话中的永生概念，探讨人类对时间和永恒的不同理解...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+            </div>
+          </article>
+          
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">埃及《亡灵书》与克苏鲁神话中的禁忌知识</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-06-20</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">探讨埃及《亡灵书》与克苏鲁神话中禁忌知识的相似性，分析两者在引导灵魂、揭示宇宙真相方面的作用...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+              <a href="#" class="text-xs bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 px-3 py-1 rounded-full">神秘学</a>
+            </div>
+          </article>
+          
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">希腊神话中的泰坦与克苏鲁旧日支配者</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-06-15</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">对比希腊神话中的泰坦神族与克苏鲁神话中的旧日支配者，分析两者在宇宙地位、力量属性和被推翻方式上的相似性...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-accent/10 dark:bg-accent/20 text-accent dark:text-accent px-3 py-1 rounded-full">希腊神话</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 2025年5月 -->
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-primary dark:text-cosmic-400">2025年5月</h2>
+        <div class="space-y-4">
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">克苏鲁神话中的城市与埃及失落的都市传说</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-05-30</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">比较克苏鲁神话中拉莱耶等失落之城与埃及传说中的赫利奥波利斯等神秘都市，分析两者在文化记忆和考古学上的意义...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+              <a href="#" class="text-xs bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 px-3 py-1 rounded-full">考古学</a>
+            </div>
+          </article>
+          
+          <article class="border-b border-mythic-100 dark:border-mythic-700 pb-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-lg font-bold hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">
+                <a href="article.html">古埃及魔法与克苏鲁召唤仪式的对比研究</a>
+              </h3>
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">2025-05-20</span>
+            </div>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-3 line-clamp-2">分析古埃及魔法文献与克苏鲁神话中召唤仪式的结构、目的和潜在危险，探讨不同文化对超自然力量的控制尝试...</p>
+            <div class="flex flex-wrap gap-2">
+              <a href="#" class="text-xs bg-primary/10 dark:bg-cosmic-600/20 text-primary dark:text-cosmic-400 px-3 py-1 rounded-full">克苏鲁神话</a>
+              <a href="#" class="text-xs bg-secondary/10 dark:bg-secondary/20 text-secondary dark:text-secondary px-3 py-1 rounded-full">埃及神话</a>
+              <a href="#" class="text-xs bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 px-3 py-1 rounded-full">神秘学</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 分页 -->
+      <div class="mt-10 flex justify-center">
+        <nav class="flex items-center space-x-1">
+          <a href="#" class="px-3 py-2 rounded-lg bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 hover:bg-primary hover:text-white dark:hover:bg-cosmic-600 transition-colors duration-300">
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <a href="#" class="px-3 py-2 rounded-lg bg-primary dark:bg-cosmic-600 text-white">1</a>
+          <a href="#" class="px-3 py-2 rounded-lg bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 hover:bg-primary hover:text-white dark:hover:bg-cosmic-600 transition-colors duration-300">2</a>
+          <a href="#" class="px-3 py-2 rounded-lg bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 hover:bg-primary hover:text-white dark:hover:bg-cosmic-600 transition-colors duration-300">3</a>
+          <a href="#" class="px-3 py-2 rounded-lg bg-mythic-100 dark:bg-mythic-700 text-mythic-600 dark:text-mythic-300 hover:bg-primary hover:text-white dark:hover:bg-cosmic-600 transition-colors duration-300">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-mythic-800 dark:bg-mythic-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4 flex items-center">
+            <i class="fa fa-eye text-primary mr-2"></i>
+            克苏鲁秘语
+          </h3>
+          <p class="text-mythic-300 mb-4">探索神话与未知的边界，揭示克苏鲁与古文明的神秘联系。</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-mythic-400 hover:text-primary transition-colors duration-300">
+              <i class="fa fa-twitter"></i>
+            </a>
+            <a href="#" class="text-mythic-400 hover:text-primary transition-colors duration-300">
+              <i class="fa fa-github"></i>
+            </a>
+            <a href="#" class="text-mythic-400 hover:text-primary transition-colors duration-300">
+              <i class="fa fa-linkedin"></i>
+            </a>
+            <a href="#" class="text-mythic-400 hover:text-primary transition-colors duration-300">
+              <i class="fa fa-youtube-play"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">快速链接</h3>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-mythic-300 hover:text-primary transition-colors duration-300">首页</a></li>
+            <li><a href="tags.html" class="text-mythic-300 hover:text-primary transition-colors duration-300">标签云</a></li>
+            <li><a href="search.html" class="text-mythic-300 hover:text-primary transition-colors duration-300">搜索</a></li>
+            <li><a href="about.html" class="text-mythic-300 hover:text-primary transition-colors duration-300">关于</a></li>
+            <li><a href="archive.html" class="text-mythic-300 hover:text-primary transition-colors duration-300">文章归档</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">热门标签</h3>
+          <div class="flex flex-wrap gap-2">
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">克苏鲁神话</a>
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">埃及神话</a>
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">希腊神话</a>
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">旧日支配者</a>
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">神秘学</a>
+            <a href="#" class="px-3 py-1 bg-mythic-700 text-mythic-300 rounded-full text-xs hover:bg-primary hover:text-white transition-colors duration-300">考古学</a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">订阅更新</h3>
+          <p class="text-mythic-300 mb-4">订阅我们的电子邮件，获取最新的神话学研究。</p>
+          <form class="space-y-2">
+            <div>
+              <input type="email" placeholder="您的邮箱地址" class="w-full px-4 py-2 bg-mythic-700 border border-mythic-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <button type="submit" class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300">
+              订阅
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="border-t border-mythic-700 mt-8 pt-8 text-center text-mythic-400 text-sm">
+        <p>&copy; 2025 克苏鲁秘语. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('shadow-md');
+        navbar.classList.remove('py-3');
+        navbar.classList.add('py-2');
+      } else {
+        navbar.classList.remove('shadow-md');
+        navbar.classList.remove('py-2');
+        navbar.classList.add('py-3');
+      }
+    });
+    
+    // 移动端菜单切换
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 主题切换
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      document.documentElement.classList.toggle('dark');
+      
+      // 存储用户偏好
+      if (document.documentElement.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+      }
+    });
+    
+    // 检查用户之前的偏好
+    if (localStorage.getItem('theme') === 'dark' || 
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

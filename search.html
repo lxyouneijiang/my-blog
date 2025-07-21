@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索 - 克苏鲁秘语</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8B5CF6',
+            secondary: '#EC4899',
+            accent: '#10B981',
+            dark: '#111827',
+            light: '#F9FAFB',
+            mythic: {
+              50: '#F3F4F6',
+              100: '#E5E7EB',
+              200: '#D1D5DB',
+              300: '#9CA3AF',
+              400: '#6B7280',
+              500: '#4B5563',
+              600: '#374151',
+              700: '#1F2937',
+              800: '#111827',
+              900: '#030712',
+            },
+            cosmic: {
+              50: '#F5F3FF',
+              100: '#EDE9FE',
+              200: '#DDD6FE',
+              300: '#C4B5FD',
+              400: '#A78BFA',
+              500: '#8B5CF6',
+              600: '#7C3AED',
+              700: '#6D28D9',
+              800: '#5B21B6',
+              900: '#4C1D95',
+            }
+          },
+          fontFamily: {
+            mythos: ['Georgia', 'serif'],
+            cosmic: ['"Arial Narrow"', 'sans-serif'],
+          },
+          backgroundImage: {
+            'mythic-pattern': "url('https://picsum.photos/id/1048/1200/800')",
+            'cosmic-void': "url('https://picsum.photos/id/1019/1200/800')",
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            glow: {
+              '0%': { textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6' },
+              '100%': { textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6' },
+            }
+          }
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .text-shadow-glow {
+        text-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+      }
+      .bg-blur {
+        backdrop-filter: blur(8px);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .animate-float-slow {
+        animation: float 8s ease-in-out infinite;
+      }
+    }
+  </style>
+</head>
+<body class="bg-mythic-50 dark:bg-mythic-900 text-mythic-800 dark:text-mythic-100 transition-colors duration-300 font-mythos">
+  <!-- 导航栏 -->
+  <header class="fixed w-full top-0 z-50 transition-all duration-300" id="navbar">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between bg-white/80 dark:bg-mythic-800/80 bg-blur">
+      <a href="index.html" class="flex items-center space-x-2">
+        <span class="text-2xl text-primary dark:text-cosmic-400 font-bold animate-pulse-slow">
+          <i class="fa fa-eye"></i>
+        </span>
+        <span class="text-xl font-cosmic tracking-wider">克苏鲁秘语</span>
+      </a>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="index.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">首页</a>
+        <a href="tags.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">标签云</a>
+        <a href="search.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">搜索</a>
+        <a href="about.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300">关于</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button class="md:hidden text-2xl" id="menu-toggle">
+        <i class="fa fa-bars"></i>
+      </button>
+      
+      <!-- 主题切换按钮 -->
+      <button id="theme-toggle" class="ml-4 p-2 rounded-full hover:bg-mythic-200 dark:hover:bg-mythic-700 transition-colors duration-300">
+        <i class="fa fa-moon-o dark:hidden"></i>
+        <i class="fa fa-sun-o hidden dark:inline-block"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-mythic-800">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="index.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">首页</a>
+        <a href="tags.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">标签云</a>
+        <a href="search.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">搜索</a>
+        <a href="about.html" class="hover:text-primary dark:hover:text-cosmic-400 transition-colors duration-300 py-2">关于</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main class="container mx-auto px-4 pt-24 pb-16">
+    <!-- 页面标题 -->
+    <section class="mb-12 text-center">
+      <h1 class="text-[clamp(1.75rem,5vw,3rem)] font-bold text-primary dark:text-cosmic-400 mb-4">搜索</h1>
+      <p class="text-lg text-mythic-600 dark:text-mythic-300 max-w-3xl mx-auto">搜索与埃及希腊神话、克苏鲁相关的文章和内容</p>
+    </section>
+    
+    <!-- 搜索框 -->
+    <section class="max-w-2xl mx-auto mb-12">
+      <div class="relative">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="输入关键词搜索..."
+          class="w-full px-6 py-4 pr-12 rounded-full bg-white dark:bg-mythic-800 shadow-lg border border-mythic-200 dark:border-mythic-700 focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-cosmic-500 transition-all duration-300"
+        >
+        <button id="search-button" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-primary dark:bg-cosmic-600 text-white p-2 rounded-full hover:bg-primary/80 dark:hover:bg-cosmic-500 transition-colors duration-300">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+      
+      <!-- 搜索建议 -->
+      <div id="search-suggestions" class="hidden mt-2 bg-white dark:bg-mythic-800 rounded-lg shadow-lg border border-mythic-200 dark:border-mythic-700 overflow-hidden absolute w-full z-10">
+        <div class="p-4 text-mythic-500 dark:text-mythic-400">搜索建议将显示在这里</div>
+      </div>
+    </section>
+    
+    <!-- 搜索结果 -->
+    <section id="search-results" class="max-w-4xl mx-auto">
+      <div class="text-center py-12" id="initial-message">
+        <i class="fa fa-search text-5xl text-mythic-300 dark:text-mythic-600 mb-4 block animate-pulse-slow"></i>
+        <p class="text-mythic-500 dark:text-mythic-400">输入关键词并点击搜索按钮开始查找内容</p>
+      </div>
+      
+      <!-- 搜索结果将在这里动态加载 -->
+      <div id="results-container" class="hidden space-y-6">
+        <!-- 结果项示例 -->
+        <div class="bg-white dark:bg-mythic-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1">
+          <h3 class="text-xl font-bold mb-2 text-primary dark:text-cosmic-400"><a href="article.html">示例文章标题</a></h3>
+          <p class="text-mythic-600 dark:text-mythic-300 mb-4">这是文章内容的摘要，包含搜索关键词的相关上下文...</p>
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-mythic-500 dark:text-mythic-400">发布日期: 2023-10-15</span>
+            <a href="article.html" class="text-primary dark:text-cosmic-400 hover:underline">阅读更多</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    // 主题切换功能
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.getElementById('menu-toggle');
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const searchResults = document.getElementById('search-results');
+    const initialMessage = document.getElementById('initial-message');
+    const resultsContainer = document.getElementById('results-container');
+
+    // 检查本地存储中的主题偏好
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlElement.classList.add('dark');
+    } else {
+      htmlElement.classList.remove('dark');
+    }
+
+    // 主题切换按钮点击事件
+    themeToggle.addEventListener('click', () => {
+      htmlElement.classList.toggle('dark');
+      localStorage.theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+    });
+
+    // 移动端菜单切换
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // 搜索功能
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performSearch();
+    });
+
+    // 搜索输入框焦点事件
+    searchInput.addEventListener('focus', () => {
+      if (searchInput.value.length > 0) {
+        searchSuggestions.classList.remove('hidden');
+      }
+    });
+
+    // 点击页面其他地方隐藏搜索建议
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#search-input') && !e.target.closest('#search-suggestions')) {
+        searchSuggestions.classList.add('hidden');
+      }
+    });
+
+    // 执行搜索
+    function performSearch() {
+      const query = searchInput.value.trim();
+      if (!query) return;
+
+      // 隐藏初始消息，显示结果容器
+      initialMessage.classList.add('hidden');
+      resultsContainer.classList.remove('hidden');
+
+      // 在实际应用中，这里会发送请求到服务器获取搜索结果
+      // 这里仅做演示，显示示例结果
+      console.log(`搜索关键词: ${query}`);
+
+      // 模拟加载状态
+      resultsContainer.innerHTML = '<div class="text-center py-12"><i class="fa fa-spinner fa-spin text-3xl text-primary dark:text-cosmic-400"></i><p class="mt-2">搜索中...</p></div>';
+
+      // 模拟搜索延迟
+      setTimeout(() => {
+        // 这里可以根据实际搜索结果动态生成HTML
+        resultsContainer.innerHTML = `
+          <div class="bg-white dark:bg-mythic-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1">
+            <h3 class="text-xl font-bold mb-2 text-primary dark:text-cosmic-400"><a href="article.html">克苏鲁神话中的古神体系</a></h3>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-4">本文详细介绍了克苏鲁神话中的古神体系，包括${query}等重要神祇的起源与特性...</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">发布日期: 2023-09-10</span>
+              <a href="article.html" class="text-primary dark:text-cosmic-400 hover:underline">阅读更多</a>
+            </div>
+          </div>
+          <div class="bg-white dark:bg-mythic-800 rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1">
+            <h3 class="text-xl font-bold mb-2 text-primary dark:text-cosmic-400"><a href="article.html">埃及神话与克苏鲁的联系</a></h3>
+            <p class="text-mythic-600 dark:text-mythic-300 mb-4">探索埃及神话中的神祇与克苏鲁神话的关联，分析${query}在两种神话体系中的象征意义...</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-mythic-500 dark:text-mythic-400">发布日期: 2023-08-15</span>
+              <a href="article.html" class="text-primary dark:text-cosmic-400 hover:underline">阅读更多</a>
+            </div>
+          </div>
+        `;
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
